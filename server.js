@@ -1,10 +1,26 @@
-const express = require('express'); 
-const useragent = require('express-useragent');
-const app = experss(); 
+'use strict'
+const express = require('express');
+const app = express();
+
+app.get('/', function(request, response) {
+
+	const ipaddress = request.get('X-Forwaded-For') || request.connection.remoteAddress;
+	const language = request.get('Accept-Language').split(',')[0];
+	const userAgent = request.get('User-Agent').split(' ');
+	const software = userAgent[1].slice('1') + ' ' + userAgent[2];
 
 
-app.use(useragent.express()); 
+	const clientSpecs = {
+		ipaddress: ipaddress,
+		language: language,
+		software: software
+	};
 
-app.get('/', function() {
+	// send the specs
+	response.send(JSON.stringify(clientSpecs));
+
 
 });
+
+
+app.listen(3000);
