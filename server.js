@@ -1,6 +1,7 @@
 'use strict'
 const express = require('express');
 const app = express();
+const DEFAULT_PORT = process.env.PORT || 5000;
 
 app.get('/api/whoami', function(request, response) {
 
@@ -23,4 +24,4 @@ app.get('/api/whoami', function(request, response) {
 });
 
 
-app.listen(3000);
+app.listen(DEFAULT_PORT);
